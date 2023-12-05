@@ -1,7 +1,7 @@
 public class OrderItem {
     private Product product;
     private int quantity;
-    private double buyingPrice; // Add buying price
+    private double buyingPrice;
 
     public OrderItem(Product product, int quantity, double buyingPrice) {
         this.product = product;
