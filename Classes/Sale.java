@@ -2,13 +2,13 @@ public class Sale {
     private int saleId;
     private Product product;
     private int quantity;
-    private double totalPrice;
+    private double sellingPrice; // Add selling price
 
-    public Sale(int saleId, Product product, int quantity) {
+    public Sale(int saleId, Product product, int quantity, double sellingPrice) {
         this.saleId = saleId;
         this.product = product;
         this.quantity = quantity;
-        this.totalPrice = calculateTotalPrice();
+        this.sellingPrice = sellingPrice;
     }
 
     public int getSaleId() {
@@ -23,12 +23,12 @@ public class Sale {
         return quantity;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
+    public double getSellingPrice() {
+        return sellingPrice;
     }
 
-    private double calculateTotalPrice() {
-        return product.getSellingPrice() * quantity;
+    public double getSaleTotalPrice() {
+        return sellingPrice * quantity;
     }
 
     // Additional methods can be added as needed
