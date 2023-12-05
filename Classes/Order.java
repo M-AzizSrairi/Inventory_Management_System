@@ -29,5 +29,13 @@ public class Order {
         orderItems.add(orderItem);
     }
 
+    public double getOrderTotalPrice() {
+        double total = 0.0;
+        for (OrderItem orderItem : orderItems) {
+            total += orderItem.getOrderItemTotalPrice();
+        }
+        return total;
+    }
+
     // Additional methods can be added as needed
 }
