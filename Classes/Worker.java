@@ -17,8 +17,31 @@ public class Worker extends Person {
         }
     }
 
+    //Setters
+    public void setWorkingHoursPerDay(int workingHoursPerDay){
+        if (workingHoursPerDay >= 0) {
+            this.workingHoursPerDay = workingHoursPerDay;
+        }
+    }
 
+    public void setSalaryperHour(int salaryPerHour){
+        if (salaryPerHour >= 0) {
+            this.salaryPerHour = salaryPerHour;
+        }
+    }
 
+    //Getters
+    public int getWorkingHoursPerDay(){
+        return this.workingHoursPerDay;
+    }
+
+    public double getSalaryPerHour() {
+        return this.workingHoursPerDay;
+    }
+
+    public double monthlySalary(int workingDays){
+        return this.workingHoursPerDay * this.salaryPerHour * workingDays ;
+    }
 
 
     @Override
