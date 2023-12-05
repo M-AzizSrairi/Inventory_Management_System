@@ -25,5 +25,5 @@ public class OrderItem {
         return buyingPrice * quantity;
     }
 
-    // Additional methods can be added as needed
+
 }
