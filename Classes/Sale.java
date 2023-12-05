@@ -1,3 +1,4 @@
+package Classes;
 public class Sale {
     private int saleId;
     private Product product;

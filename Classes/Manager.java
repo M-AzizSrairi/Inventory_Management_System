@@ -1,5 +1,4 @@
 package Classes;
-
 public class Manager  extends Person{
 
     private double monthlySalary;
