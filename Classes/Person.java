@@ -2,8 +2,8 @@ package Classes;
 
 public abstract class Person {
     private static int nextPersonID = 1000;
-    private int personID;
-    private String name;
+    protected int personID;
+    protected String name;
     private int age;
 
     //Constructor 
@@ -27,5 +27,14 @@ public abstract class Person {
 
     //abstract method - display Info
     public abstract void displayInfo();
+
+    //Getter methods
+    public int getPersonID(){
+        return this.personID;
+    }
+
+    public String getName(){
+        return this.name;
+    }
     
 }
