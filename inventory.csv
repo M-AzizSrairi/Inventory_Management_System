@@ -17,3 +17,4 @@ productID;name;category;buyingPrice;sellingPrice;Quantity
 16;Fanta;Beverages;0,8;1,55;100
 17;Tropico;Beverages;0,6;0,9;256
 16,marshmallow,sweets,2.6,3.5
+20,Name,Test,120,12
