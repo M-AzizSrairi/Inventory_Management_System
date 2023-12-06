@@ -1,4 +1,4 @@
-package com.inventory.JavaProject;
+
 
 import javax.swing.*;
 import java.awt.*;
