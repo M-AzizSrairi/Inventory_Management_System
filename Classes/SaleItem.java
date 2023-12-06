@@ -5,6 +5,7 @@ public class SaleItem {
     private String name;
     private String category;
     private double sellingPrice;
+    private double buyingPrice;
     private int quantity;
 
     public SaleItem(Product product, int quantity) {
@@ -12,6 +13,7 @@ public class SaleItem {
         this.name = product.getName();
         this.category = product.getCategory();
         this.sellingPrice = product.getSellingPrice();
+        this.buyingPrice = product.getBuyingPrice(); // Retrieve buying price from Product class
         this.quantity = quantity;
     }
 
@@ -31,6 +33,10 @@ public class SaleItem {
         return sellingPrice;
     }
 
+    public double getBuyingPrice() {
+        return buyingPrice;
+    }
+
     public int getQuantity() {
         return quantity;
     }
@@ -39,4 +45,3 @@ public class SaleItem {
         return sellingPrice * quantity;
     }
 }
-

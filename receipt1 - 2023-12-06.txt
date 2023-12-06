@@ -1,0 +1,12 @@
+Your Receipt:
+SaleID: 1
+Date of today: 2023-12-06
+Date of today: 17:59:32.901
+
+Groceries list:
+Product, Quantity, Unit Price, Total
+CocaCola, 2, 1.4, 2.8
+Soap_dettol , 3, 9.5, 28.5
+
+Total Price: 31.3
+See you soon

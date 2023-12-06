@@ -4,17 +4,17 @@ public class Product {
     private static int nextProductID = 1;
 
     private int productID;
-    private double buyingPrice;
-    private double sellingPrice;
     private String name;
     private String category;
+    private double buyingPrice;
+    private double sellingPrice;
 
-    public Product(double buyingPrice, double sellingPrice, String name, String category) {
+    public Product(String name, String category, double buyingPrice, double sellingPrice) {
         this.productID = nextProductID++;
-        this.buyingPrice = buyingPrice;
-        this.sellingPrice = sellingPrice;
         this.name = name;
         this.category = category;
+        this.buyingPrice = buyingPrice;
+        this.sellingPrice = sellingPrice;
     }
 
     public int getProductID() {

@@ -1,0 +1,11 @@
+Your Receipt:
+SaleID: 5
+Date of today: 2023-12-06
+Date of today: 18:36:47.067
+
+Groceries list:
+Product, Quantity, Unit Price, Total
+Soap_dove, 15, 5.5, 82.5
+
+Total Price: 82.5
+See you soon

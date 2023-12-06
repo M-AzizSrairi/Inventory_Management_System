@@ -1,5 +1,3 @@
-package com.inventory.JavaProject;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -67,7 +65,7 @@ public class ProductAdditionInterface extends JFrame {
         String buyingPrice = buyingPriceField.getText();
         String quantity = quantityField.getText();
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\USER\\Documents\\NetBeansProjects\\Inventory\\src\\main\\java\\com\\inventory\\JavaProject\\inventory.csv", true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("inventory.csv", true))) {
             // Append the new product information to the CSV file
             writer.write(productId + "," + productName + "," + category + "," + buyingPrice + "," + quantity);
             writer.newLine();

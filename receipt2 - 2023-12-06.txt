@@ -1,0 +1,12 @@
+Your Receipt:
+SaleID: 2
+Date of today: 2023-12-06
+Date of today: 18:00:10.430
+
+Groceries list:
+Product, Quantity, Unit Price, Total
+EauToilette, 8, 2.5, 20.0
+Pate_warda, 1, 0.7, 0.7
+
+Total Price: 20.7
+See you soon
