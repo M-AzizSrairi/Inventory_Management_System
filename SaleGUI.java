@@ -1,15 +1,15 @@
 
-
 import javax.swing.*;
+
+import Classes.Product;
+import Classes.Sale;
+import Classes.SaleItem;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
-import Classes.Product;
-import Classes.Sale;
-import Classes.SaleItem;
 
 
 class SaleGUI extends JFrame {

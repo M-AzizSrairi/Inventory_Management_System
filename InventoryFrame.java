@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -51,7 +49,7 @@ public class InventoryFrame extends javax.swing.JFrame {
         add(sidebarPanel, BorderLayout.WEST);
 
         // Create the product table
-        String[] columnNames = {"Product", "Product ID", "Category", "Buying Price", "Quantity", "Availability"};
+        String[] columnNames = {"productID", "name", "category", "buyingPrice",  "sellingPrice", "Quantity"};
         tableModel = new DefaultTableModel(columnNames, 0);
         productTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(productTable);
