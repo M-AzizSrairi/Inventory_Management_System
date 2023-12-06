@@ -36,8 +36,6 @@ public class Product {
     public String getCategory() {
         return category;
     }
-
-    // You can add more methods or attributes based on your specific requirements
 }
 
 
