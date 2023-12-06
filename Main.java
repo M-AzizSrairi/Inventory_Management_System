@@ -1,3 +1,5 @@
+package com.inventory.JavaProject;
+
 import javax.swing.*;
 public class Main {
 

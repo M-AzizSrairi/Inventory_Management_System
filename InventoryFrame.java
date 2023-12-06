@@ -1,3 +1,5 @@
+package com.inventory.JavaProject;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -10,6 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+import javax.swing.border.EmptyBorder;
 
 public class InventoryFrame extends javax.swing.JFrame {
     private JTable productTable;
@@ -19,13 +22,33 @@ public class InventoryFrame extends javax.swing.JFrame {
     private JLabel lowStockLabel;
     private Map<String, Integer> categoryCounts;
     
+    private JPanel sidebarPanel;
+    
     public InventoryFrame() {
         initializeUI();
     }
     private void initializeUI() {
+        // Set the default font for the UIManager
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            Font font = new Font("Poppins", Font.PLAIN, 14);
+            UIManager.put("Button.font", font);
+            UIManager.put("Label.font", font);
+            UIManager.put("TextField.font", font);
+            UIManager.put("Table.font", font);
+            UIManager.put("TableHeader.font", font);
+            // Add more components as needed
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setTitle("Inventory Management System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(1000, 600);
+        
+         // Create a sidebar panel
+        JPanel sidebarPanel = createSidebar();
+        add(sidebarPanel, BorderLayout.WEST);
 
         // Create the product table
         String[] columnNames = {"Product", "Product ID", "Category", "Buying Price", "Quantity", "Availability"};
@@ -196,7 +219,69 @@ public class InventoryFrame extends javax.swing.JFrame {
     private String[] getSampleCategories() {
         return new String[]{"Espresso", "Latte", "Cappuccino", "Mocha", "Americano"};
     }
+    
+    private JPanel createSidebar() {
+        JPanel sidebarPanel = new JPanel();
+        sidebarPanel.setBackground(new Color(240, 241, 243)); // #F0F1F3
+        sidebarPanel.setLayout(new BoxLayout(sidebarPanel, BoxLayout.Y_AXIS));
+        sidebarPanel.setBorder(new EmptyBorder(20, 10, 20, 10)); // Add padding
 
+        JLabel marketLabel = new JLabel("UNO Market");
+        marketLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        marketLabel.setFont(new Font("Poppins", Font.BOLD, 16)); // Use Poppins font
+        sidebarPanel.add(marketLabel);
+        sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add vertical spacing
+
+        String[] pageNames = {"Dashboard", "Inventory", "Reports", "Suppliers", "Orders"};
+        for (String pageName : pageNames) {
+            JButton pageButton = new JButton(pageName);
+            pageButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            pageButton.setFont(new Font("Poppins", Font.PLAIN, 14)); // Use Poppins font
+            pageButton.setBackground(new Color(240, 241, 243)); // #F0F1F3
+            pageButton.setBorderPainted(false); // No border
+            pageButton.setFocusPainted(false); // No focus border
+            pageButton.setContentAreaFilled(false); // No background
+            pageButton.setForeground(new Color(93, 102, 121)); // Font color: #5D6679
+
+            pageButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    handlePageNavigation(pageName);
+                }
+            });
+
+            // Check if the page name matches the current page (for example, InventoryFrame)
+            if (pageName.equalsIgnoreCase(getClass().getSimpleName())) {
+                pageButton.setForeground(new Color(21, 112, 239)); // Font color: #1570EF
+            }
+
+            sidebarPanel.add(pageButton);
+            sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add vertical spacing
+        }
+
+        return sidebarPanel;
+    }
+
+    private void handlePageNavigation(String pageName) {
+        // Implement logic to switch between pages based on the button clicked
+        switch (pageName) {
+            case "Dashboard":
+                // Handle dashboard page
+                break;
+            case "Inventory":
+                // Handle inventory page
+                break;
+            case "Reports":
+                // Handle reports page
+                break;
+            case "Suppliers":
+                // Handle suppliers page
+                break;
+            case "Orders":
+                // Handle orders page
+                break;
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
