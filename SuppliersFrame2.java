@@ -22,17 +22,17 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 
 
-public class InventoryFrame extends javax.swing.JFrame {
-    private JTable productTable;
+public class SuppliersFrame2 extends javax.swing.JFrame {
+    private JTable suppliersTable;
+    // Table model for the suppliers table
     private DefaultTableModel tableModel;
-    private JLabel totalCategoriesLabel;
-    private JLabel totalProductsLabel;
-    private JLabel lowStockLabel;
-    private Map<String, Integer> categoryCounts;
+
+    // Components for updating KPIs
+    private JLabel totalSuppliersLabel;
     
     private JPanel sidebarPanel;
     
-    public InventoryFrame() {
+    public SuppliersFrame2() {
         initializeUI();
         displayCSVData();
         updateKPIs();
@@ -58,12 +58,12 @@ public class InventoryFrame extends javax.swing.JFrame {
         setSize(1000, 600);
 
 
-        // Create the product table
-        String[] columnNames = {"Product ID", "Product Name", "Category", "Buying Price", "Selling Price", "Quantity"};
+        String[] columnNames = {"Supplier Name", "Product", "Category", "Contact Number", "Email"};
         tableModel = new DefaultTableModel(columnNames, 0);
-        productTable = new JTable(tableModel);
-        productTable.setDefaultRenderer(Object.class, new CustomTableCellRenderer());
-        JScrollPane scrollPane = new JScrollPane(productTable);
+        suppliersTable = new JTable(tableModel);
+        // Set custom cell renderer to add space between cells
+        suppliersTable.setDefaultRenderer(Object.class, new CustomTableCellRenderer());
+        JScrollPane scrollPane = new JScrollPane(suppliersTable);
 
         // Create a panel for the sidebar
         JPanel sidebarPanel = createSidebarPanel();
@@ -75,11 +75,11 @@ public class InventoryFrame extends javax.swing.JFrame {
         // Add the table to the center of the frame
         add(scrollPane, BorderLayout.CENTER);
         // Add a button to add a new product
-        JButton addProductButton = new JButton("Add Product");
+        JButton addProductButton = new JButton("Add Supplier");
         addProductButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showAddProductDialog();
+                showAddSupplierDialog();
             }
         });
 
@@ -97,17 +97,11 @@ public class InventoryFrame extends javax.swing.JFrame {
         buttonPanel.add(exportCsvButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // Add labels for KPIs
-        totalCategoriesLabel = new JLabel("Total Categories: 0");
-        totalProductsLabel = new JLabel("Total Products: 0");
-        lowStockLabel = new JLabel("Low Stock: 0");
-        
-        kpiPanel.add(totalCategoriesLabel);
-        kpiPanel.add(totalProductsLabel);
-        kpiPanel.add(lowStockLabel);
+        totalSuppliersLabel = new JLabel("Total Suppliers: 0");
+        kpiPanel.add(totalSuppliersLabel);
         add(kpiPanel, BorderLayout.NORTH);
-        // Initialize category counts
-        categoryCounts = new HashMap<>();
+
+        setLocationRelativeTo(null);
         // Display the frame
         setVisible(true);
     }
@@ -139,40 +133,38 @@ public class InventoryFrame extends javax.swing.JFrame {
         }
     }
 
-    private void showAddProductDialog() {
-    ProductAdditionInterface productAdditionInterface = new ProductAdditionInterface();
+    private void showAddSupplierDialog() {
+    SupplierAdditionInterface supplierAdditionInterface = new SupplierAdditionInterface();
 
     JButton addButton = new JButton("Add");
     addButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             // Handle adding the product to the table
-            String productId = productAdditionInterface.getProductId();
-            String productName = productAdditionInterface.getProductName();
-            String category = productAdditionInterface.getCategory();
-            String buyingPrice = productAdditionInterface.getBuyingPrice();
-            String sellingPrice = productAdditionInterface.getSellingPrice();
-            String quantity = productAdditionInterface.getQuantity();
-
+            String supplierName = supplierAdditionInterface.getSupplierName();
+            String productName = supplierAdditionInterface.getProductName();
+            String category = supplierAdditionInterface.getCategory();
+            String number = supplierAdditionInterface.getcontact();
+            String email = supplierAdditionInterface.getemail();
             
             // Update KPIs
             updateKPIs();
-            productAdditionInterface.dispose();
+            supplierAdditionInterface.dispose();
             displayCSVData();
         }
     });
     
-    productAdditionInterface.setVisible(true);
+    supplierAdditionInterface.setVisible(true);
     }
     
     private void displayCSVData() {
-        String csvFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Inventory\\src\\main\\java\\com\\inventory\\JavaProject\\inventory.csv";
+        String csvFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Inventory\\src\\main\\java\\com\\inventory\\JavaProject\\suppliers.csv";
         String line;
         String cvsSplitBy = ",";
         boolean firstLine = true;
 
-       try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            DefaultTableModel model = (DefaultTableModel) productTable.getModel();
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            DefaultTableModel model = (DefaultTableModel) suppliersTable.getModel();
 
             // Clear existing data from the table
             model.setRowCount(0);
@@ -190,13 +182,13 @@ public class InventoryFrame extends javax.swing.JFrame {
             }
 
             // Set row height for better readability
-            productTable.setRowHeight(30);
+            suppliersTable.setRowHeight(30);
 
             // Set padding between cell content and cell border
-            productTable.setIntercellSpacing(new Dimension(10, 10));
+            suppliersTable.setIntercellSpacing(new Dimension(10, 10));
 
             // Apply custom cell renderer
-            productTable.setDefaultRenderer(Object.class, new CustomTableCellRenderer());
+            suppliersTable.setDefaultRenderer(Object.class, new CustomTableCellRenderer());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -212,48 +204,11 @@ public class InventoryFrame extends javax.swing.JFrame {
 
     
     private void updateKPIs() {
-        String csvFile = "C:\\Users\\USER\\Documents\\NetBeansProjects\\Inventory\\src\\main\\java\\com\\inventory\\JavaProject\\inventory.csv";
-        String line;
-        String cvsSplitBy = ",";
-        Set<String> categorySet = new HashSet<>();
-        int totalProducts = 0;
-        int lowStockCount = 0;
-
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-            // Skip the headers
-            br.readLine();
-
-            while ((line = br.readLine()) != null) {
-                // use comma as separator
-                String[] data = line.split(cvsSplitBy);
-
-                // Update total categories 
-                categorySet.add(data[2]);
-
-                // Update total products
-                totalProducts++;
-
-                int quantity = Integer.parseInt(data[5]);
-                if (quantity < 10) {
-                    lowStockCount++;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Update total categories label
-        int totalCategories = categorySet.size();
-        totalCategoriesLabel.setText("Total Categories: " + totalCategories);
-
-        // Update total products label
-        totalProductsLabel.setText("Total Products: " + totalProducts);
-
-        // Update low stock label
-        lowStockLabel.setText("Low Stock: " + lowStockCount);
+        // Update total suppliers label
+        int totalSuppliers = tableModel.getRowCount();
+        totalSuppliersLabel.setText("Total Suppliers: " + totalSuppliers);
     }
     
-    // ---------- SideBarPanel Here ---------- //
     private JPanel createSidebarPanel() {
         JPanel sidebarPanel = new JPanel();
         sidebarPanel.setBackground(new Color(240, 241, 243)); // #F0F1F3
@@ -351,13 +306,14 @@ public class InventoryFrame extends javax.swing.JFrame {
             break;
     }
 }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -374,15 +330,43 @@ public class InventoryFrame extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>//GEN-END:initComponents
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        SwingUtilities.invokeLater(() -> new InventoryFrame());
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(SuppliersFrame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(SuppliersFrame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(SuppliersFrame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(SuppliersFrame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new SuppliersFrame2().setVisible(true);
+            }
+        });
     }
 
-    // Variables declaration - do not modify                     
-    // End of variables declaration                   
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // End of variables declaration//GEN-END:variables
 }
