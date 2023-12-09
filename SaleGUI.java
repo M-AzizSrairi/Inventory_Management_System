@@ -26,8 +26,8 @@ public class SaleGUI extends JFrame {
 
     public SaleGUI(String title) {
         super(title);
-        setSize(900, 600);
-
+        setSize(1000, 600);
+        setLocationRelativeTo(null);
         sale = new Sale();
 
         // Create components

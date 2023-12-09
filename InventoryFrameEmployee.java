@@ -36,6 +36,7 @@ public class InventoryFrameEmployee extends javax.swing.JFrame {
         initializeUI();
         displayCSVData();
         updateKPIs();
+        setLocationRelativeTo(null);
     }
     private void initializeUI() {
         setLayout(new BorderLayout());

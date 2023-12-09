@@ -4,6 +4,10 @@
  */
 package com.inventory.JavaProject;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,16 +25,37 @@ public class LoginFrame extends JFrame {
 
     public LoginFrame() {
         initializeUI();
+        setLocationRelativeTo(null);
     }
 
     private void initializeUI() {
-        setTitle("Login");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 200);
-        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        // Set the default font for the UIManager
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            Font font = new Font("Poppins", Font.PLAIN, 14);
+            UIManager.put("Button.font", font);
+            UIManager.put("Label.font", font);
+            UIManager.put("TextField.font", font);
+            UIManager.put("PasswordField.font", font);
+            UIManager.put("ComboBox.font", font);
+            // Add more components as needed
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        setTitle("Login to Inventory Management System");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(400, 260);
+
+        // Create the background panel
+        JPanel backgroundPanel = new JPanel();
+        backgroundPanel.setBackground(Color.GRAY);
+        backgroundPanel.setLayout(new BorderLayout());
+
+        // Create the content panel for user inputs
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
         JLabel usernameLabel = new JLabel("Username:");
         usernameField = new JTextField();
@@ -48,15 +73,24 @@ public class LoginFrame extends JFrame {
             }
         });
 
-        panel.add(usernameLabel);
-        panel.add(usernameField);
-        panel.add(passwordLabel);
-        panel.add(passwordField);
-        panel.add(userTypeLabel);
-        panel.add(userTypeComboBox);
-        panel.add(loginButton);
+        // Add spacing between components
+        int verticalSpacing = 10;
+        contentPanel.add(usernameLabel);
+        contentPanel.add(usernameField);
+        contentPanel.add(Box.createRigidArea(new Dimension(0, verticalSpacing)));
+        contentPanel.add(passwordLabel);
+        contentPanel.add(passwordField);
+        contentPanel.add(Box.createRigidArea(new Dimension(0, verticalSpacing)));
+        contentPanel.add(userTypeLabel);
+        contentPanel.add(userTypeComboBox);
+        contentPanel.add(Box.createRigidArea(new Dimension(0, verticalSpacing)));
+        contentPanel.add(loginButton);
 
-        add(panel);
+        // Add the content panel to the background panel
+        backgroundPanel.add(contentPanel, BorderLayout.CENTER);
+
+        // Add the background panel to the frame
+        add(backgroundPanel);
     }
 
     private void login() {
@@ -70,7 +104,7 @@ public class LoginFrame extends JFrame {
             // Open the corresponding frame based on user type
             if ("Manager".equals(userType)) {
                 // Open manager frame
-                new InventoryFrame().setVisible(true);
+                new DashboardFrame().setVisible(true);
             } else {
                 // Open employee frame (e.g., SalesGUI)
                 new SaleGUI("Sales Interface").setVisible(true);

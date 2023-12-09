@@ -36,6 +36,7 @@ public class SuppliersFrame2 extends javax.swing.JFrame {
         initializeUI();
         displayCSVData();
         updateKPIs();
+        setLocationRelativeTo(null);
     }
     private void initializeUI() {
         setLayout(new BorderLayout());
@@ -282,7 +283,7 @@ public class SuppliersFrame2 extends javax.swing.JFrame {
     switch (pageName) {
         case "Dashboard":
             // Open the DashboardFrame
-            //new DashboardFrame().setVisible(true);
+            new DashboardFrame().setVisible(true);
             break;
         case "Inventory":
             // Open the InventoryFrame
