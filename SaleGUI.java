@@ -1,3 +1,5 @@
+package com.inventory.JavaProject;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,13 +10,15 @@ import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Scanner;
+import javax.swing.JComboBox;
 
 import Classes.Sale;
 import Classes.SaleItem;
 import Classes.Product;
+import javax.swing.border.EmptyBorder;
 
 public class SaleGUI extends JFrame {
-
+    private JPanel sidebarPanel;
     private Sale sale;
     private JTextField productIdField;
     private JTextField quantityField;
@@ -65,8 +69,16 @@ public class SaleGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 generateReport();
                 createTextFile();
+                // Update the product report
+                updateProductReportCSV();
+                reportArea.setText("");
+                sale.resetFacture();
             }
         });
+        
+        // Create a panel for the sidebar
+        JPanel sidebarPanel = createSidebarPanel();
+        add(sidebarPanel, BorderLayout.WEST);
     }
 
     private void addProduct() {
@@ -88,9 +100,6 @@ public class SaleGUI extends JFrame {
                 // Add the product to the sale
                 sale.addSaleItem(product, quantity);
 
-                // Update the product report
-                updateProductReportCSV();
-
                 // Update the sales report
                 updateReportArea();
             } else {
@@ -107,7 +116,7 @@ public class SaleGUI extends JFrame {
     }
 
     private Object[] getProductById(int productId, int quantity) {
-        try (Scanner scanner = new Scanner(new File("inventory.csv"))) {
+        try (Scanner scanner = new Scanner(new File("/C:/Users/USER/Documents/NetBeansProjects/Inventory/src/main/java/com/inventory/JavaProject/inventory.csv"))) {
             scanner.useLocale(new java.util.Locale("en", "US"));
             scanner.useDelimiter(",|\\R");
 
@@ -143,7 +152,7 @@ public class SaleGUI extends JFrame {
     }
 
     private void updateInventory(int productId, int quantity, int availableQuantity) {
-        try (Scanner scanner = new Scanner(new File("inventory.csv"))) {
+        try (Scanner scanner = new Scanner(new File("/C:/Users/USER/Documents/NetBeansProjects/Inventory/src/main/java/com/inventory/JavaProject/inventory.csv"))) {
             scanner.useLocale(new java.util.Locale("en", "US"));
             scanner.useDelimiter(",|\\R");
 
@@ -175,7 +184,7 @@ public class SaleGUI extends JFrame {
             }
 
             // Write the updated content back to the inventory.csv file
-            try (PrintWriter writer = new PrintWriter("inventory.csv")) {
+            try (PrintWriter writer = new PrintWriter("/C:/Users/USER/Documents/NetBeansProjects/Inventory/src/main/java/com/inventory/JavaProject/inventory.csv")) {
                 writer.print(updatedInventory.toString());
             }
 
@@ -188,7 +197,7 @@ public class SaleGUI extends JFrame {
         String date = sale.getSaleDate().toString();
 
         for (SaleItem item : sale.getSaleItems()) {
-            try (Scanner scanner = new Scanner(new File("prodreport.csv"))) {
+            try (Scanner scanner = new Scanner(new File("/C:/Users/USER/Documents/NetBeansProjects/Inventory/src/main/java/com/inventory/JavaProject/prodreport.csv"))) {
                 scanner.useLocale(new java.util.Locale("en", "US"));
                 scanner.useDelimiter(",|\\R");
 
@@ -226,7 +235,7 @@ public class SaleGUI extends JFrame {
                 }
 
                 // Write the updated content back to the prodreport.csv file
-                try (PrintWriter writer = new PrintWriter("prodreport.csv")) {
+                try (PrintWriter writer = new PrintWriter("/C:/Users/USER/Documents/NetBeansProjects/Inventory/src/main/java/com/inventory/JavaProject/prodreport.csv")) {
                     writer.print(updatedProductReport.toString());
                 }
 
@@ -266,7 +275,7 @@ public class SaleGUI extends JFrame {
         double totalCost = sale.getTotalCost();
         double netRevenue = sale.calculateNetRevenue();
 
-        try (Scanner scanner = new Scanner(new File("report.csv"))) {
+        try (Scanner scanner = new Scanner(new File("/C:/Users/USER/Documents/NetBeansProjects/Inventory/src/main/java/com/inventory/JavaProject/report.csv"))) {
             scanner.useLocale(new java.util.Locale("en", "US"));
             scanner.useDelimiter(",|\\R");
 
@@ -310,7 +319,7 @@ public class SaleGUI extends JFrame {
             }
 
             // Write the updated content back to the report.csv file
-            try (PrintWriter writer = new PrintWriter("report.csv")) {
+            try (PrintWriter writer = new PrintWriter("/C:/Users/USER/Documents/NetBeansProjects/Inventory/src/main/java/com/inventory/JavaProject/report.csv")) {
                 writer.print(updatedReport.toString());
             }
 
@@ -341,7 +350,91 @@ public class SaleGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Error generating text file!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    // ------- SIDEBAR ------------ //
+    private JPanel createSidebarPanel() {
+        JPanel sidebarPanel = new JPanel();
+        sidebarPanel.setBackground(new Color(240, 241, 243)); // #F0F1F3
+        sidebarPanel.setLayout(new BoxLayout(sidebarPanel, BoxLayout.Y_AXIS));
+        sidebarPanel.setBorder(new EmptyBorder(20, 10, 20, 10)); // Add padding
 
+        JLabel marketLabel = new JLabel("UNO Market");
+        marketLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        marketLabel.setFont(new Font("Poppins", Font.BOLD, 16)); // Use Poppins font
+        sidebarPanel.add(marketLabel);
+        sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add vertical spacing
+
+        String[] pageNames = {"Inventory", "Sales Invoice", "Orders"};
+        for (String pageName : pageNames) {
+            JButton pageButton = new JButton(pageName);
+            pageButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+            pageButton.setFont(new Font("Poppins", Font.PLAIN, 14)); // Use Poppins font
+            pageButton.setBackground(new Color(240, 241, 243)); // #F0F1F3
+            pageButton.setBorderPainted(false); // No border
+            pageButton.setFocusPainted(false); // No focus border
+            pageButton.setContentAreaFilled(false); // No background
+            pageButton.setForeground(new Color(93, 102, 121)); // Font color: #5D6679
+
+            pageButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                    handlePageNavigation(pageName);
+                }
+            });
+
+            // Highlight the current page button
+            if (getCurrentPage().equalsIgnoreCase(pageName)) {
+                pageButton.setForeground(new Color(21, 112, 239)); // Font color: #1570EF
+            }
+
+            sidebarPanel.add(pageButton);
+            sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add vertical spacing
+        }
+
+        return sidebarPanel;
+    }
+    
+    private String getCurrentPage() {
+        // Get the simple name of the class of the active frame
+        String className = getClass().getSimpleName();
+        // Map the class name to the corresponding page name
+        switch (className) {
+            case "InventoryFrameEmployee":
+                return "Inventory";
+            case "SaleGUI":
+                return "Sales Invoice";
+            case "OrdersFrame":
+                return "Orders";
+            default:
+                return "UNKOWN"; // Handle unknown class names or return a default value
+        }
+    }
+
+
+    private void handlePageNavigation(String pageName) {
+        // Dispose of the current frame
+        dispose();
+
+        // Implement logic to switch between pages based on the button clicked
+        switch (pageName) {
+            case "Inventory":
+                new InventoryFrameEmployee().setVisible(true);
+                break;
+            case "Sales Invoice" :
+                new SaleGUI("SalesReport").setVisible(true);
+                break;
+            case "Orders":
+                // Open the OrdersFrame
+                //new OrdersFrame().setVisible(true);
+                break;
+            default:
+                // Handle unknown page names
+                System.out.println("Unknown page: " + pageName);
+                break;
+        }
+    }
+    
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new SaleGUI("Sale Interface").setVisible(true));
     }

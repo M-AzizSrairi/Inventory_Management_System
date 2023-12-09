@@ -88,6 +88,11 @@ public class Sale {
                 .mapToDouble(SaleItem::calculateTotalPrice)
                 .sum();
     }
+    
+    public void resetFacture() {
+        totalPrice = 0;
+        saleItems.clear();
+    }
 
     public double getTotalCost() {
         double totalCost = 0.0;

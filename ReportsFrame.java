@@ -9,6 +9,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYDataset;
 import com.inventory.JavaProject.LineChartExample;
 import static com.inventory.JavaProject.LineChartExample.createDataset;
+import javax.swing.border.EmptyBorder;
 import org.jfree.chart.ChartPanel;
 
 public class ReportsFrame extends JFrame {
@@ -19,8 +20,8 @@ public class ReportsFrame extends JFrame {
 
     private void initializeUI() {
         setTitle("Reports");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1200, 800);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(1000, 600);
         setLocationRelativeTo(null);
 
         // Create a panel for the sidebar
@@ -31,8 +32,8 @@ public class ReportsFrame extends JFrame {
         mainContentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Upper-left panel with total profit, revenue, cost, etc.
-        JPanel upperLeftPanel = new RoundedPanel(20);
-        upperLeftPanel.setLayout(new GridLayout(3, 2, 0, 10));
+        JPanel upperLeftPanel = new RoundedPanel(15);
+        upperLeftPanel.setLayout(new GridLayout(2, 3, 0, 10));
         upperLeftPanel.setBackground(Color.WHITE);
 
         // Add labels and values to upperLeftPanel
@@ -65,7 +66,7 @@ public class ReportsFrame extends JFrame {
         upperLeftPanel.add(yearlyProfitValue);
 
         // Upper-right panel with best selling categories
-        JPanel upperRightPanel = new RoundedPanel(20);
+        JPanel upperRightPanel = new RoundedPanel(15);
         upperRightPanel.setLayout(new BorderLayout());
         upperRightPanel.setBackground(Color.WHITE);
 
@@ -78,7 +79,7 @@ public class ReportsFrame extends JFrame {
         
         
         // Create the bottom panel with profit & revenue over time chart
-        JPanel bottomPanel = new RoundedPanel(20);
+        JPanel bottomPanel = new RoundedPanel(15);
         bottomPanel.setBackground(Color.WHITE);
 
         // Create the dataset for the line chart
@@ -95,7 +96,7 @@ public class ReportsFrame extends JFrame {
         bottomPanel.add(chartPanel);
 
         // Create the panel for best selling product
-        JPanel bestSellingProductPanel = new RoundedPanel(20);
+        JPanel bestSellingProductPanel = new RoundedPanel(15);
         bestSellingProductPanel.setBackground(Color.WHITE);
 
         // Placeholder for best selling product information
@@ -120,52 +121,105 @@ public class ReportsFrame extends JFrame {
         setVisible(true);
     }
 
+
+
+    // ---------- SideBarPanel Here ---------- //
     private JPanel createSidebarPanel() {
         JPanel sidebarPanel = new JPanel();
         sidebarPanel.setBackground(new Color(240, 241, 243)); // #F0F1F3
         sidebarPanel.setLayout(new BoxLayout(sidebarPanel, BoxLayout.Y_AXIS));
-        sidebarPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10)); // Add padding
+        sidebarPanel.setBorder(new EmptyBorder(20, 10, 20, 10)); // Add padding
 
-        JLabel titleLabel = new JLabel("UNO Market");
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        titleLabel.setFont(new Font("Poppins", Font.BOLD, 16));
-        sidebarPanel.add(titleLabel);
-        sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20)));
+        JLabel marketLabel = new JLabel("UNO Market");
+        marketLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        marketLabel.setFont(new Font("Poppins", Font.BOLD, 16)); // Use Poppins font
+        sidebarPanel.add(marketLabel);
+        sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add vertical spacing
 
         String[] pageNames = {"Dashboard", "Inventory", "Reports", "Suppliers", "Orders"};
         for (String pageName : pageNames) {
             JButton pageButton = new JButton(pageName);
             pageButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            pageButton.setFont(new Font("Poppins", Font.PLAIN, 14));
-            pageButton.setBackground(new Color(240, 241, 243));
-            pageButton.setBorderPainted(false);
-            pageButton.setFocusPainted(false);
-            pageButton.setContentAreaFilled(false);
-            pageButton.setForeground(new Color(93, 102, 121));
+            pageButton.setFont(new Font("Poppins", Font.PLAIN, 14)); // Use Poppins font
+            pageButton.setBackground(new Color(240, 241, 243)); // #F0F1F3
+            pageButton.setBorderPainted(false); // No border
+            pageButton.setFocusPainted(false); // No focus border
+            pageButton.setContentAreaFilled(false); // No background
+            pageButton.setForeground(new Color(93, 102, 121)); // Font color: #5D6679
 
             pageButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    dispose();
                     handlePageNavigation(pageName);
                 }
             });
 
-            // Check if the page name matches the current page
-            if (pageName.equalsIgnoreCase(getClass().getSimpleName())) {
-                pageButton.setForeground(new Color(21, 112, 239));
+            // Highlight the current page button
+            if (getCurrentPage().equalsIgnoreCase(pageName)) {
+                pageButton.setForeground(new Color(21, 112, 239)); // Font color: #1570EF
             }
 
             sidebarPanel.add(pageButton);
-            sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+            sidebarPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add vertical spacing
         }
 
         return sidebarPanel;
     }
 
+    private String getCurrentPage() {
+        // Get the simple name of the class of the active frame
+        String className = getClass().getSimpleName();
+        System.out.println(className);
+        // Map the class name to the corresponding page name
+        switch (className) {
+            case "DashboardFrame":
+                return "Dashboard";
+            case "InventoryFrame":
+                return "Inventory";
+            case "ReportsFrame":
+                return "Reports";
+            case "SuppliersFrame2":
+                return "Suppliers";
+            case "OrdersFrame":
+                return "Orders";
+            default:
+                return "UNKOWN"; // Handle unknown class names or return a default value
+        }
+    }
+
+
     private void handlePageNavigation(String pageName) {
+        // Dispose of the current frame
+        dispose();
+
         // Implement logic to switch between pages based on the button clicked
-        // Add your logic here
-        System.out.println("Navigating to: " + pageName);
+        switch (pageName) {
+            case "Dashboard":
+                // Open the DashboardFrame
+                //new DashboardFrame().setVisible(true);
+                break;
+            case "Inventory":
+                // Open the InventoryFrame
+                new InventoryFrame().setVisible(true);
+                break;
+            case "Reports":
+                // Open the ReportsFrame
+                //new ReportsFrame().setVisible(true);
+                break;
+            case "Suppliers":
+                // Open the SuppliersFrame
+                new SuppliersFrame2().setVisible(true);
+                break;
+            case "Orders":
+                // Open the OrdersFrame
+                new OrdersFrame().setVisible(true);
+                break;
+            default:
+                // Handle unknown page names
+                System.out.println("Unknown page: " + pageName);
+                break;
+        }
     }
 
     public static void main(String[] args) {

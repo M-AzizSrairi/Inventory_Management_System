@@ -73,7 +73,7 @@ public class LoginFrame extends JFrame {
                 new InventoryFrame().setVisible(true);
             } else {
                 // Open employee frame (e.g., SalesGUI)
-                new SuppliersFrame2().setVisible(true);
+                new SaleGUI("Sales Interface").setVisible(true);
             }
 
             // Close the login frame
