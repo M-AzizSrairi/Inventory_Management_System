@@ -309,6 +309,8 @@ public class InventoryFrameEmployee extends javax.swing.JFrame {
                 return "Sales Invoice";
             case "OrdersFrame":
                 return "Orders";
+            case "LoginFrame":
+                return "Logout";
             default:
                 return "UNKOWN"; // Handle unknown class names or return a default value
         }
@@ -330,6 +332,10 @@ public class InventoryFrameEmployee extends javax.swing.JFrame {
             case "Orders":
                 // Open the OrdersFrame
                 //new OrdersFrame().setVisible(true);
+                break;
+            case "Logout":
+                // Open the logutFrame
+                new LoginFrame().setVisible(true);
                 break;
             default:
                 // Handle unknown page names

@@ -175,12 +175,9 @@ public class DashboardFrame extends javax.swing.JFrame {
 
         if (salesData.containsKey(todayDate)) {
             String[] values = salesData.get(todayDate);
-            System.out.println("It contains yes");
-            System.out.println(Arrays.toString(values));
             totalProfitToday = Double.parseDouble(values[1]);
             totalCostToday = Double.parseDouble(values[2]);
             netRevenueToday = Double.parseDouble(values[3]);
-            System.out.println("CSV Date: '" + values[0] + "'");
         }
 
         // Create labels and values for the summary
@@ -625,7 +622,7 @@ public class DashboardFrame extends javax.swing.JFrame {
         sidebarPanel.add(marketLabel);
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add vertical spacing
 
-        String[] pageNames = {"Dashboard", "Inventory", "Reports", "Suppliers", "Orders"};
+        String[] pageNames = {"Dashboard", "Inventory", "Reports", "Suppliers", "Orders", "Logout"};
         for (String pageName : pageNames) {
             JButton pageButton = new JButton(pageName);
             pageButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -672,6 +669,8 @@ public class DashboardFrame extends javax.swing.JFrame {
                 return "Suppliers";
             case "OrdersFrame":
                 return "Orders";
+            case "LoginFrame":
+                return "Logout";
             default:
                 return "UNKOWN"; // Handle unknown class names or return a default value
         }
@@ -703,6 +702,10 @@ public class DashboardFrame extends javax.swing.JFrame {
         case "Orders":
             // Open the OrdersFrame
             //new OrdersFrame().setVisible(true);
+            break;
+        case "Logout":
+            // Open the logutFrame
+            new LoginFrame().setVisible(true);
             break;
         default:
             // Handle unknown page names

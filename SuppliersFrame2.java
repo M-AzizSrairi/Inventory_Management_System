@@ -222,7 +222,7 @@ public class SuppliersFrame2 extends javax.swing.JFrame {
         sidebarPanel.add(marketLabel);
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add vertical spacing
 
-        String[] pageNames = {"Dashboard", "Inventory", "Reports", "Suppliers", "Orders"};
+        String[] pageNames = {"Dashboard", "Inventory", "Reports", "Suppliers", "Orders", "Logout"};
         for (String pageName : pageNames) {
             JButton pageButton = new JButton(pageName);
             pageButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -269,6 +269,8 @@ public class SuppliersFrame2 extends javax.swing.JFrame {
                 return "Suppliers";
             case "OrdersFrame":
                 return "Orders";
+            case "LoginFrame":
+                return "Logout";
             default:
                 return "UNKOWN"; // Handle unknown class names or return a default value
         }
@@ -300,6 +302,10 @@ public class SuppliersFrame2 extends javax.swing.JFrame {
         case "Orders":
             // Open the OrdersFrame
             //new OrdersFrame().setVisible(true);
+            break;
+        case "Logout":
+            // Open the logutFrame
+            new LoginFrame().setVisible(true);
             break;
         default:
             // Handle unknown page names
