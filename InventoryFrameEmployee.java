@@ -267,7 +267,7 @@ public class InventoryFrameEmployee extends javax.swing.JFrame {
         sidebarPanel.add(marketLabel);
         sidebarPanel.add(Box.createRigidArea(new Dimension(0, 20))); // Add vertical spacing
 
-        String[] pageNames = {"Inventory", "Sales Invoice", "Orders"};
+        String[] pageNames = {"Inventory", "Sales Invoice", "Orders", "Logout"};
         for (String pageName : pageNames) {
             JButton pageButton = new JButton(pageName);
             pageButton.setAlignmentX(Component.CENTER_ALIGNMENT);

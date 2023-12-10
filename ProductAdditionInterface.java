@@ -47,12 +47,12 @@ public class ProductAdditionInterface extends JFrame {
         mainPanel.add(categoryField);
 
         mainPanel.add(new JLabel("Buying Price:"));
-        sellingPriceField = new JTextField();
-        mainPanel.add(sellingPriceField);
-        
-        mainPanel.add(new JLabel("Selling Price:"));
         buyingPriceField = new JTextField();
         mainPanel.add(buyingPriceField);
+        
+        mainPanel.add(new JLabel("Selling Price:"));
+        sellingPriceField = new JTextField();
+        mainPanel.add(sellingPriceField);
 
         mainPanel.add(new JLabel("Quantity:"));
         quantityField = new JTextField();
@@ -213,7 +213,7 @@ public class ProductAdditionInterface extends JFrame {
     }
     
     public String getSellingPrice() {
-        return buyingPriceField.getText();
+        return sellingPriceField.getText();
     }
 
     public String getQuantity() {
