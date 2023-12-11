@@ -40,5 +40,5 @@ Welcome to the Inventory Management System project! This system provides a user-
      - Manage inventory, process orders, and generate sales invoices.
 
 ### Acknowledgement:
-Inventory managed System project was developed as part of a project for the Java OOP Course by Fares Rayen, and Srairi Mohamed Aziz.
+Inventory management System project was developed as part of a project for the Java OOP Course by Fares Rayen, and Srairi Mohamed Aziz.
 
