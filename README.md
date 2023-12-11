@@ -15,6 +15,12 @@ Welcome to the Inventory Management System project! This system provides a user-
   - Inventory Management
   - Orders Management
   - Sales Invoice Generation
+ 
+- **CSV files:**
+  - `report.csv` provides a full report of the Sales with revenues, costs, and net profit.
+  - `prodReport.csv` provides a daily report of the Product Sales.
+  - `inventory.csv` to store the Products.
+  - `suppliers.csv` to store the Suppliers.
 
 ## Getting Started
 
